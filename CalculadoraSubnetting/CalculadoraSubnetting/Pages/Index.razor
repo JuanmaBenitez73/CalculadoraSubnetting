@@ -51,20 +51,20 @@
 
 @code {
 		class SubnetInfo
-    {
-        public string Name { get; set; }
-        public int HostsRequired { get; set; }
-        public string SubnetAddress { get; set; }
-        public string SubnetMask { get; set; }
-        public string BroadcastAddress { get; set; }
-        public string RangeStart { get; set; }
-        public string RangeEnd { get; set; }
-        public int AvailableHosts { get; set; }
-    }
+		{
+			public string Name { get; set; }
+			public int HostsRequired { get; set; }
+			public string SubnetAddress { get; set; }
+			public string SubnetMask { get; set; }
+			public string BroadcastAddress { get; set; }
+			public string RangeStart { get; set; }
+			public string RangeEnd { get; set; }
+			public int AvailableHosts { get; set; }
+		}
 
-	string IpAddress { get; set; }
-	int NumberOfSubnets { get; set; }
-	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
-	bool showResults = false;
+		private bool showResults = false;
 
+		public string IpAddress { get; set; }
+		public int NumberOfSubnets { get; set; }
+		List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
 }
