@@ -4,8 +4,25 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+#div1{
+    margin-top:50px;
+}
+
 #title, #description{
     text-align: center;
+}
+
+#table1 {
+    margin: auto;
+    margin-top:50px;
+    display: flex;
+    max-width:1000px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+table, tr, td{
+    border:solid black 2px;
 }
 
 a, .btn-link {
