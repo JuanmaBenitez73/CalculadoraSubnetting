@@ -147,7 +147,9 @@
 
 			subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
 
+			subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
 
+			Subnets.Add(subnetInfo);
 
 		}
 	}
