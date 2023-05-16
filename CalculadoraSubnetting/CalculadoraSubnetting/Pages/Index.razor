@@ -44,7 +44,7 @@
 				<td><button type="submit">Change</button></td>
 			</tr>
 			<tr>
-				<td colspan="5" class="my-border"><button type="submit" @onclick="CalculateSubnets">Submit</button></td>
+				<td colspan="5" class="my-border"><input type="submit" @onclick="CalculateSubnets" value="Submit"></input></td>
 			</tr>
 		</table>
 	</div>
@@ -125,7 +125,7 @@
 		}
 
 		List<byte> ipBytes = new List<byte>();
-		List<byte> ipmaskBytes = new List<byte>();
+		byte ipmaskBytes = (byte)(subnetMask);
 
 		foreach (int item in octetosIp)
 		{
