@@ -71,10 +71,10 @@
 	public int NumberOfSubnets { get; set; }
 	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
 
-	private SubnetInfo subnetInfo = new SubnetInfo();
-
 	public void CalculateSubnets()
 	{
+		VerifyNumber();
+
 		showResults = false;
 
 		Subnets.Clear();
@@ -130,17 +130,21 @@
 
 		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
+	}
 
-		if (NumberOfSubnets > 0)
+	public void VerifyNumber()
+	{
+		if (NumberOfSubnets <= 0)
 		{
-			for (int i = 0; i < NumberOfSubnets; i++)
-			{
-				subnetInfo.HostsRequired = Subnets[i].HostsRequired;
-			}
+			NumberOfSubnets = 1;
 		}
 		else
 		{
-			NumberOfSubnets = 1;
+			for (int i = 0; i < NumberOfSubnets; i++)
+			{
+				SubnetInfo subnetInfo = new SubnetInfo();
+				subnetInfo.HostsRequired = Subnets[i].HostsRequired;
+			}
 		}
 	}
 }
