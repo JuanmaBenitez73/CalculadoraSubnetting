@@ -237,8 +237,19 @@
 		return string.Join(".", broadcastAddressBytes);
 	}
 
-	public void GetAvailableHosts()
+	private int GetAvailableHosts(string rangeStart, string rangeEnd)
 	{
+		List<byte> rangeStartBytes = rangeStart.Split('.').Select(byte.Parse).ToList();
+		List<byte> rangeEndBytes = rangeEnd.Split('.').Select(byte.Parse).ToList();
+
+		int availableHosts = 0;
+
+		for (int i = 0; i < 4; i++)
+		{
+			availableHosts += rangeEndBytes[i] - rangeStartBytes[i] + 1;
+		}
+
+		return availableHosts;
 
 	}
 }
