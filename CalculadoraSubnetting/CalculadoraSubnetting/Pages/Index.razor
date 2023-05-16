@@ -161,13 +161,21 @@
 		}
 	}
 
-	private void GetSubnetAddress()
+	private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, int subnetSize, int subnetIndex)
 	{
-		
+		List<byte> subnetAddressBytes = new List<byte>();
+		for (int j = 0; j < 4; j++)
+		{
+			byte subnetByte = (byte)(ipBytes[j] & maskBytes[j]);
+			subnetByte |= (byte)(subnetIndex >> (8 * (3 - j)) & 0xFF);
+			subnetAddressBytes.Add(subnetByte);
+		}
+		return string.Join(".", subnetAddressBytes);
 	}
 
 	public void GetSubnetMask()
 	{
+
 
 	}
 
