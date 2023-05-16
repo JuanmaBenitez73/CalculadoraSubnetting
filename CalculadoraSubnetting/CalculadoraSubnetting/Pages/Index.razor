@@ -67,13 +67,13 @@
 	public int RowSpan => NumberOfSubnets + 1;
 
 	private bool showResults = false;
-	public string IpAddress { get; set; }
+	public string? IpAddress { get; set; }
 	public int NumberOfSubnets { get; set; }
 	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
 
 	SubnetInfo subnetInfo = new SubnetInfo();
 
-	public void CalculateSubnets()
+	public async void CalculateSubnets()
 	{
 		VerifyNumber();
 
@@ -85,11 +85,11 @@
 
 		string maskPattern = @"/{1}\d{1,2}";
 
-		string ipAddress = IpAddress;
+		string? ipAddress = IpAddress;
 
 		int subnetMask = 0;
 
-		Match ipMatch = Regex.Match(ipAddress,ipPattern);
+		Match ipMatch = Regex.Match(ipAddress, ipPattern);
 
 		Match maskMatch = Regex.Match(ipAddress, maskPattern);
 
@@ -113,13 +113,14 @@
 				}
 				else
 				{
-					Console.WriteLine("El número está fuera del rango disponible");
+					await JSRuntime.InvokeVoidAsync("incorrectRange");
+					//Console.WriteLine("Alguno de los números está fuera del rango disponible");
 				}
 			}
 		}
 		else
 		{
-			Console.WriteLine("Introduce los numeros correctamente porfavor");
+			IpAddress = "";
 		}
 
 		List<byte> ipBytes = new List<byte>();
