@@ -1,9 +1,11 @@
 ﻿@page "/"
 @using System.Text.RegularExpressions;
+@using Microsoft.JSInterop;
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
 <body>
+	@*@onload="CallJavaScript"*@
 	<div id="div1">
 		<div id="title">
 			<h1>Calculadora de Subnetting (FLSM)</h1>
@@ -38,7 +40,7 @@
 			}
 			<tr class="top-border">
 				<td class="center">Número de subredes:</td>
-				<td colspan="2"><input type="number" @bind="NumberOfSubnets" /></td>
+				<td colspan="2"><input id="n-subnets" type="number" @bind="NumberOfSubnets" /></td>
 				<td><button type="submit">Change</button></td>
 			</tr>
 			<tr>
@@ -133,6 +135,19 @@
 		for(int i = 0; i < NumberOfSubnets; i++)
 		{
 			subnetInfo.HostsRequired = Subnets[i].HostsRequired;
+		}
+	}
+
+	private async Task CallJavaScript()
+	{
+		await JSRuntime.InvokeVoidAsync("myFunction");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender)
+		{
+			await CallJavaScript();
 		}
 	}
 }
