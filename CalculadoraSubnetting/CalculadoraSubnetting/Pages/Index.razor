@@ -4,7 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body>
+<body @onload="CalculateSubnets">
 	<div id="div1">
 		<div id="title">
 			<h1>Calculadora de Subnetting (FLSM)</h1>
@@ -70,6 +70,8 @@
 	public string IpAddress { get; set; }
 	public int NumberOfSubnets { get; set; }
 	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
+
+	SubnetInfo subnetInfo = new SubnetInfo();
 
 	public void CalculateSubnets()
 	{
@@ -142,7 +144,6 @@
 		{
 			for (int i = 0; i < NumberOfSubnets; i++)
 			{
-				SubnetInfo subnetInfo = new SubnetInfo();
 				subnetInfo.HostsRequired = Subnets[i].HostsRequired;
 			}
 		}
