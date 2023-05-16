@@ -127,6 +127,7 @@
 
 		List<byte> ipBytes = new List<byte>();
 		byte ipmaskBytes = (byte)(subnetMask);
+		List<byte> ipsmaskBytes = new List<byte> { (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };
 
 		foreach (int item in octetosIp)
 		{
@@ -140,7 +141,15 @@
 		{
 			Subnets[i].HostsRequired = subnetInfo.HostsRequired;
 
+			subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
 
+			subnetInfo.SubnetMask = GetSubnetMask(ipmaskBytes);
+
+			subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+
+			subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
+
+			Subnets.Add(subnetInfo);
 
 		}
 	}
@@ -235,8 +244,19 @@
 		return string.Join(".", broadcastAddressBytes);
 	}
 
-	public void GetAvailableHosts()
+	private int GetAvailableHosts(string rangeStart, string rangeEnd)
 	{
+		List<byte> rangeStartBytes = rangeStart.Split('.').Select(byte.Parse).ToList();
+		List<byte> rangeEndBytes = rangeEnd.Split('.').Select(byte.Parse).ToList();
+
+		int availableHosts = 0;
+
+		for (int i = 0; i < 4; i++)
+		{
+			availableHosts += rangeEndBytes[i] - rangeStartBytes[i] + 1;
+		}
+
+		return availableHosts;
 
 	}
 }
