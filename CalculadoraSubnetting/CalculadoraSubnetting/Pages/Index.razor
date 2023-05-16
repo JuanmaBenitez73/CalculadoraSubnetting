@@ -35,16 +35,16 @@
 			{
 				<tr>
 					<td colspan="2" class="right-border"><input type="text" placeholder="Subred" /></td>
-					<td colspan="2"><input type="number" id="hosts-required" /></td>
+					<td colspan="2"><input type="number" class="hosts-required" /></td>
 				</tr>
 			}
 			<tr class="top-border">
 				<td class="center">Número de subredes:</td>
 				<td colspan="2"><input id="n-subnets" type="number" @bind="NumberOfSubnets" /></td>
-				<td><button type="submit">Change</button></td>
+				<td><button type="submit" @onclick="VerifyNumberOfSubnets">Change</button></td>
 			</tr>
 			<tr>
-				<td colspan="5" class="my-border"><input type="submit" @onclick="CalculateSubnets" value="Submit"></input></td>
+				<td colspan="5" class="my-border"><button type="submit">Submit</button></td>@*@onclick="CalculateSubnets"*@
 			</tr>
 		</table>
 	</div>

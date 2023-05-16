@@ -1,12 +1,11 @@
-function myFunction() {
-    /*var hosts = document.getElementById("hosts-required").innerHTML;
+export function myFunction() {
+    var hosts = document.getElementByClassName("hosts-required");
     var nSubnets = document.getElementById("n-subnets").getAttribute("@bind");
 
     console.log(hosts);
-    console.log(nSubnets);*/
-    alert("Tony gai");
+    console.log(nSubnets);
 }
 
-function incorrectRange() {
+export function incorrectRange() {
     alert("Alguno de los números está fuera del rango disponible");
 }
