@@ -216,15 +216,19 @@
 
 	}
 
-	public void GetFirstHostAddress()
+	private string GetFirstHostAddress(string subnetAddress)
 	{
-
+		List<byte> subnetAddressBytes = subnetAddress.Split('.').Select(byte.Parse).ToList();
+		subnetAddressBytes[3] += 1;
+		return string.Join(".", subnetAddressBytes);
 
 	}
 
-	public void GetLastHostAddress()
+	private string GetLastHostAddress(string broadcastAddress)
 	{
-
+		List<byte> broadcastAddressBytes = broadcastAddress.Split('.').Select(byte.Parse).ToList();
+		broadcastAddressBytes[3] -= 1;
+		return string.Join(".", broadcastAddressBytes);
 	}
 
 	public void GetAvailableHosts()
