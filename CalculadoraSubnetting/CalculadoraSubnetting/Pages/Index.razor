@@ -83,53 +83,30 @@
 
 		int subnetMask = 0;
 
-
 		Match ipMatch = Regex.Match(ipAddress,ipPattern);
 
 		Match maskMatch = Regex.Match(ipAddress, maskPattern);
 
-		string[] octetos = new string[4];
-		int[] octetosInt = new int[octetos.Length];
+		string ip = ipAddress.Split('/')[0];
+			List<string> octetos = new List<string>();
+			List<int> octetosIp = new List<int>();
 
-		if (ipMatch.Success && maskMatch.Success)
-		{
-			//ipAddress = ipMatch.Value;
-			subnetMask = int.Parse(maskMatch.Value.Substring(1));
-
-			octetos = ipAddress.Split('.');
-			for (int i = 0; i < octetos.Length; i++)
+			if (ipMatch.Success && maskMatch.Success)
 			{
-				if (i == 3)
+				subnetMask = int.Parse(ipAddress.Split('/')[1]);
+
+				foreach (var item in ip.Split('.'))
 				{
-					for (int j = 0; j < octetos[i].Length; j++)
-					{
-						octetos[i] = octetos[i].Substring(0, 2);
-					}
+					octetos.Add(item);
 				}
-			}
-
-			for (int i = 0; i < octetos.Length; i++)
-			{
-				octetosInt[i] = int.Parse(octetos[i]);
-			}
-
-			for (int i = 0; i < octetosInt.Length; i++)
-			{
-				if (!(octetosInt[i] >= 0 && octetosInt[i] <= 255))
+				foreach (var item in octetos)
 				{
-					Console.WriteLine("El número no está en el rango");
+					octetosIp.Add(int.Parse(item));
 				}
-			}
-
-			if (!(subnetMask >= 1 && subnetMask <= 31))
+            }
+			else
 			{
-				Console.WriteLine("La máscara no es válida");
+				Console.WriteLine("Introduce los numeros correctamente porfavor");
 			}
-
-		}
-		else
-		{
-			Console.WriteLine("Introduce los numeros correctamente porfavor");
-		}
 	}
 }
