@@ -88,25 +88,25 @@
 		Match maskMatch = Regex.Match(ipAddress, maskPattern);
 
 		string ip = ipAddress.Split('/')[0];
-			List<string> octetos = new List<string>();
-			List<int> octetosIp = new List<int>();
+		List<string> octetos = new List<string>();
+		List<int> octetosIp = new List<int>();
 
-			if (ipMatch.Success && maskMatch.Success)
-			{
-				subnetMask = int.Parse(ipAddress.Split('/')[1]);
+		if (ipMatch.Success && maskMatch.Success)
+		{
+			subnetMask = int.Parse(ipAddress.Split('/')[1]);
 
-				foreach (var item in ip.Split('.'))
-				{
-					octetos.Add(item);
-				}
-				foreach (var item in octetos)
-				{
-					octetosIp.Add(int.Parse(item));
-				}
-            }
-			else
+			foreach (var item in ip.Split('.'))
 			{
-				Console.WriteLine("Introduce los numeros correctamente porfavor");
+				octetos.Add(item);
 			}
+			foreach (var item in octetos)
+			{
+				octetosIp.Add(int.Parse(item));
+			}
+        }
+		else
+		{
+			Console.WriteLine("Introduce los numeros correctamente porfavor");
+		}
 	}
 }
