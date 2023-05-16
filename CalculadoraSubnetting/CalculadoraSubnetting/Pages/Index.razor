@@ -4,7 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body @onload="CalculateSubnets">
+<body>
 	@*@onload="CalculateSubnets"*@
 	<div id="div1">
 		<div id="title">
@@ -44,7 +44,7 @@
 				<td><button type="submit">Change</button></td>
 			</tr>
 			<tr>
-				<td colspan="5" class="my-border"><button type="submit">Submit</button></td>
+				<td colspan="5" class="my-border"><button type="submit" @onclick="CalculateSubnets">Submit</button></td>
 			</tr>
 		</table>
 	</div>
