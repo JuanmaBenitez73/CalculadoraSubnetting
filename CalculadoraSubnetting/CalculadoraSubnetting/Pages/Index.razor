@@ -23,25 +23,19 @@
 			<td colspan="4" class="my-border"><input type="text" placeholder="Dirección IP" /></td>
 		</tr>
 		<tr class="center">
-			<td rowspan="5" class="my-border">Subredes</td>
+			<td rowspan="@RowSpan" class="my-border">Subredes</td>
 			<td colspan="2" class="right-border">Nombre</td>
 			<td colspan="2">Tamaño</td>
 		</tr>
-		<tr>
-			<td colspan="2" class="right-border"><input type="text" placeholder="Subred x" /></td>
-			<td colspan="2"><input type="text" placeholder="Nº Hosts" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="right-border"><input type="text" placeholder="Subred x" /></td>
-			<td colspan="2"><input type="text" placeholder="Nº Hosts" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="right-border"><input type="text" placeholder="Subred x" /></td>
-			<td colspan="2"><input type="text" placeholder="Nº Hosts" /></td>
-		</tr>
+		@for(int i = 0; i < NumberOfSubnets; i++){
+			<tr>
+				<td colspan="2" class="right-border"><input type="text" placeholder="Subred" /></td>
+				<td colspan="2"><input type="text" placeholder="Nº Hosts" @bind="subnetInfo.HostsRequired" /></td>
+			</tr>
+		}
 		<tr class="top-border">
 			<td class="center">Número de subredes:</td>
-			<td colspan="2"><input type="text" placeholder="Nº" /></td>
+			<td colspan="2"><input type="text" placeholder="Nº" @bind="NumberOfSubnets" /></td>
 			<td><button type="submit">Change</button></td>
 		</tr>
 		<tr>
@@ -65,11 +59,14 @@
 		public SubnetInfo() { }
 	}
 
-	private bool showResults = false;
+	public int RowSpan => NumberOfSubnets + 1;
 
+	private bool showResults = false;
 	public string IpAddress { get; set; }
 	public int NumberOfSubnets { get; set; }
 	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
+
+	private SubnetInfo subnetInfo = new SubnetInfo();
 
 	public void CalculateSubnets()
 	{
@@ -129,7 +126,7 @@
 		//el tamaño de cada subred 
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
 
-		for(int i = 0; i < NumberOfSubnets;i++)
+		for(int i = 0; i < NumberOfSubnets; i++)
 		{
 			
 		}
