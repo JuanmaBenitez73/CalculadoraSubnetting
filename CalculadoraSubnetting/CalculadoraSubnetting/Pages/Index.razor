@@ -103,10 +103,29 @@
 			{
 				octetosIp.Add(int.Parse(item));
 			}
-        }
+		}
 		else
 		{
 			Console.WriteLine("Introduce los numeros correctamente porfavor");
+		}
+
+		List<byte> ipBytes = new List<byte>();
+		List<byte> ipmaskBytes = new List<byte>();
+
+		foreach (string ipParse in ipAddress.Split('.'))
+		{
+			ipBytes.Add(byte.Parse(ipParse));
+
+		}
+
+
+
+		//el tamaño de cada subred 
+		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
+
+		for(int i = 0; i< NumberOfSubnets;i++)
+		{
+			
 		}
 	}
 }
