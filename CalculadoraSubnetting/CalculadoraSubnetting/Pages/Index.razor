@@ -61,6 +61,8 @@
 		public string RangeStart { get; set; }
 		public string RangeEnd { get; set; }
 		public int AvailableHosts { get; set; }
+
+		public SubnetInfo() { }
 	}
 
 	private bool showResults = false;
@@ -101,7 +103,14 @@
 			}
 			foreach (var item in octetos)
 			{
-				octetosIp.Add(int.Parse(item));
+				if (int.Parse(item) >= 0 && int.Parse(item) <= 255)
+				{
+					octetosIp.Add(int.Parse(item));
+				}
+				else
+				{
+					Console.WriteLine("El número está fuera del rango disponible");
+				}
 			}
 		}
 		else
@@ -112,18 +121,15 @@
 		List<byte> ipBytes = new List<byte>();
 		List<byte> ipmaskBytes = new List<byte>();
 
-		foreach (string ipParse in ipAddress.Split('.'))
+		foreach (int item in octetosIp)
 		{
-			ipBytes.Add(byte.Parse(ipParse));
-
+			ipBytes.Add((byte)(item));
 		}
-
-
 
 		//el tamaño de cada subred 
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
 
-		for(int i = 0; i< NumberOfSubnets;i++)
+		for(int i = 0; i < NumberOfSubnets;i++)
 		{
 			
 		}
