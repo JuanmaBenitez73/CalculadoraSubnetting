@@ -134,6 +134,14 @@
 
 		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
+
+		for (int i = 0; i < NumberOfSubnets; i++)
+		{
+			Subnets[i].HostsRequired = subnetInfo.HostsRequired;
+
+
+
+		}
 	}
 
 	public void VerifyNumberOfSubnets()
@@ -144,10 +152,42 @@
 		}
 		else
 		{
-			for (int i = 0; i < NumberOfSubnets; i++)
-			{
-				Subnets[i].HostsRequired = subnetInfo.HostsRequired;
-			}
+			//for (int i = 0; i < NumberOfSubnets; i++)
+			//{
+			//	Subnets[i].HostsRequired = subnetInfo.HostsRequired;
+
+
+			//}
 		}
+	}
+
+	private void GetSubnetAddress()
+	{
+		
+	}
+
+	public void GetSubnetMask()
+	{
+
+	}
+
+	public void GetBroadcastAddress()
+	{
+
+	}
+
+	public void GetFirstHostAddress()
+	{
+
+	}
+
+	public void GetLastHostAddress()
+	{
+
+	}
+
+	public void GetAvailableHosts()
+	{
+
 	}
 }
