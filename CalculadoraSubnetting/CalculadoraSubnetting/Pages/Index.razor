@@ -5,7 +5,6 @@
 
 <PageTitle>Calculadora Subnetting</PageTitle>
 <body>
-	@*@onload="CallJavaScript"*@
 	<div id="div1">
 		<div id="title">
 			<h1>Calculadora de Subnetting (FLSM)</h1>
@@ -132,22 +131,16 @@
 		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
 
-		for(int i = 0; i < NumberOfSubnets; i++)
+		if (NumberOfSubnets > 0)
 		{
-			subnetInfo.HostsRequired = Subnets[i].HostsRequired;
+			for (int i = 0; i < NumberOfSubnets; i++)
+			{
+				subnetInfo.HostsRequired = Subnets[i].HostsRequired;
+			}
 		}
-	}
-
-	private async Task CallJavaScript()
-	{
-		await JSRuntime.InvokeVoidAsync("myFunction");
-	}
-
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		if (firstRender)
+		else
 		{
-			await CallJavaScript();
+			NumberOfSubnets = 1;
 		}
 	}
 }
