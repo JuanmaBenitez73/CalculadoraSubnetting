@@ -198,13 +198,25 @@
 
 	}
 
-	public void GetBroadcastAddress()
+	private string GetBroadcastAddress(string subnetAddress, string subnetMask)
 	{
+		List<byte> subnetAddressBytes = subnetAddress.Split('.').Select(byte.Parse).ToList();
+		List<byte> subnetMaskBytes = subnetMask.Split('.').Select(byte.Parse).ToList();
+		List<byte> broadcastAddressBytes = new List<byte>();
+
+		for (int i = 0; i < 4; i++)
+		{
+			byte broadcastByte = (byte)(subnetAddressBytes[i] | ~subnetMaskBytes[i]);
+			broadcastAddressBytes.Add(broadcastByte);
+		}
+
+		return string.Join(".", broadcastAddressBytes);
 
 	}
 
 	public void GetFirstHostAddress()
 	{
+
 
 	}
 
