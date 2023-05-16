@@ -76,7 +76,7 @@
 
 	public async void CalculateSubnets()
 	{
-		VerifyNumber();
+		VerifyNumberOfSubnets();
 
 		showResults = false;
 
@@ -136,7 +136,7 @@
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
 	}
 
-	public void VerifyNumber()
+	public void VerifyNumberOfSubnets()
 	{
 		if (NumberOfSubnets <= 0)
 		{
@@ -146,7 +146,7 @@
 		{
 			for (int i = 0; i < NumberOfSubnets; i++)
 			{
-				subnetInfo.HostsRequired = Subnets[i].HostsRequired;
+				Subnets[i].HostsRequired = subnetInfo.HostsRequired;
 			}
 		}
 	}
