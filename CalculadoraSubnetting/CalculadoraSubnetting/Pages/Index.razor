@@ -173,9 +173,28 @@
 		return string.Join(".", subnetAddressBytes);
 	}
 
-	public void GetSubnetMask()
+	private string GetSubnetMask(int maskBits)
 	{
+		int fullBytes = maskBits / 8;
+		int remainderBits = maskBits % 8;
+		List<byte> maskBytes = new List<byte>();
 
+		for (int i = 0; i < fullBytes; i++)
+		{
+			maskBytes.Add(255);
+		}
+		if (remainderBits > 0)
+		{
+			//Esto lo que hace es  una mascara de bits para los bits restantes se utiliza lo de las boquillas  para pasar 8 - remainderBits bits hacia la izquierda <3 juanma guapo vaporeoon.
+			int remainderMask = 255 << (8 - remainderBits);
+			maskBytes.Add((byte)remainderMask);
+		}
+		while (maskBytes.Count < 4)
+		{
+			maskBytes.Add(0);
+		}
+
+		return string.Join(".", maskBytes);
 
 	}
 
