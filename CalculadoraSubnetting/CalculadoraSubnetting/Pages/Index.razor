@@ -20,7 +20,7 @@
 	<table class="my-border">
 		<tr>
 			<td class="center my-border">Dirección IP y Máscara</td>
-			<td colspan="4" class="my-border"><input type="text" placeholder="Dirección IP" /></td>
+			<td colspan="4" class="my-border"><input type="text" @bind="IpAddress" /></td>
 		</tr>
 		<tr class="center">
 			<td rowspan="@RowSpan" class="my-border">Subredes</td>
@@ -30,12 +30,12 @@
 		@for(int i = 0; i < NumberOfSubnets; i++){
 			<tr>
 				<td colspan="2" class="right-border"><input type="text" placeholder="Subred" /></td>
-				<td colspan="2"><input type="text" placeholder="Nº Hosts" @bind="subnetInfo.HostsRequired" /></td>
+				<td colspan="2"><input type="text" id="hosts-required"/></td>
 			</tr>
 		}
 		<tr class="top-border">
 			<td class="center">Número de subredes:</td>
-			<td colspan="2"><input type="text" placeholder="Nº" @bind="NumberOfSubnets" /></td>
+			<td colspan="2"><input type="text" @bind="NumberOfSubnets" /></td>
 			<td><button type="submit">Change</button></td>
 		</tr>
 		<tr>
@@ -78,7 +78,7 @@
 
 		string maskPattern = @"/{1}\d{1,2}";
 
-		string ipAddress = "192.168.2.14/24";
+		string ipAddress = IpAddress;
 
 		int subnetMask = 0;
 
@@ -123,12 +123,12 @@
 			ipBytes.Add((byte)(item));
 		}
 
-		//el tamaño de cada subred 
+		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
 
 		for(int i = 0; i < NumberOfSubnets; i++)
 		{
-			
+			subnetInfo.HostsRequired = Subnets[i].HostsRequired;
 		}
 	}
 }
