@@ -4,7 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body>
+<body @onload="CalculateSubnets">
 	@*@onload="CalculateSubnets"*@
 	<div id="div1">
 		<div id="title">
@@ -68,7 +68,7 @@
 	public int RowSpan => NumberOfSubnets + 1;
 
 	private bool showResults = false;
-	public string? IpAddress { get; set; }
+	public string IpAddress { get; set; }
 	public int NumberOfSubnets { get; set; }
 	List<SubnetInfo> Subnets { get; set; } = new List<SubnetInfo>();
 
@@ -86,7 +86,7 @@
 
 		string maskPattern = @"/{1}\d{1,2}";
 
-		string? ipAddress = IpAddress;
+		string ipAddress = IpAddress;
 
 		int subnetMask = 0;
 
