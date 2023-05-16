@@ -4,7 +4,8 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body @onload="CalculateSubnets">
+<body>
+	@*@onload="CalculateSubnets"*@
 	<div id="div1">
 		<div id="title">
 			<h1>Calculadora de Subnetting (FLSM)</h1>
@@ -132,7 +133,7 @@
 		}
 
 		//El tamaño de cada subred
-		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets; 
+		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
 	}
 
 	public void VerifyNumber()
