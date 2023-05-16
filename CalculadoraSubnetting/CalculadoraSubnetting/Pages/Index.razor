@@ -78,7 +78,7 @@
 
 	public async void CalculateSubnets()
 	{
-		VerifyNumberOfSubnets();
+		//VerifyNumberOfSubnets();
 
 		showResults = false;
 
@@ -116,8 +116,7 @@
 				}
 				else
 				{
-					await JSRuntime.InvokeVoidAsync("incorrectRange");
-					//Console.WriteLine("Alguno de los números está fuera del rango disponible");
+					await module.InvokeVoidAsync("incorrectRange");
 				}
 			}
 		}
@@ -161,6 +160,13 @@
 
 			//}
 		}
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+
+		module = await JSRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "./js/main.js");
 	}
 
 	private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, int subnetSize, int subnetIndex)
