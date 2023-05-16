@@ -79,28 +79,57 @@
 
 		string maskPattern = @"/{1}\d{1,2}";
 
-		string ipAddress = "";
+		string ipAddress = "192.168.2.14/24";
 
-		string subnetMask = "";
+		int subnetMask = 0;
 
 
 		Match ipMatch = Regex.Match(ipAddress,ipPattern);
 
 		Match maskMatch = Regex.Match(ipAddress, maskPattern);
 
+		string[] octetos = new string[4];
+		int[] octetosInt = new int[octetos.Length];
 
-		if(ipMatch.Success && maskMatch.Success)
+		if (ipMatch.Success && maskMatch.Success)
 		{
-			ipAddress = ipMatch.Value;
-			subnetMask = maskMatch.Value.Substring(1);
+			//ipAddress = ipMatch.Value;
+			subnetMask = int.Parse(maskMatch.Value.Substring(1));
+
+			octetos = ipAddress.Split('.');
+			for (int i = 0; i < octetos.Length; i++)
+			{
+				if (i == 3)
+				{
+					for (int j = 0; j < octetos[i].Length; j++)
+					{
+						octetos[i] = octetos[i].Substring(0, 2);
+					}
+				}
+			}
+
+			for (int i = 0; i < octetos.Length; i++)
+			{
+				octetosInt[i] = int.Parse(octetos[i]);
+			}
+
+			for (int i = 0; i < octetosInt.Length; i++)
+			{
+				if (!(octetosInt[i] >= 0 && octetosInt[i] <= 255))
+				{
+					Console.WriteLine("El número no está en el rango");
+				}
+			}
+
+			if (!(subnetMask >= 1 && subnetMask <= 31))
+			{
+				Console.WriteLine("La máscara no es válida");
+			}
 
 		}
 		else
 		{
 			Console.WriteLine("Introduce los numeros correctamente porfavor");
-
 		}
-			
-		
 	}
 }
