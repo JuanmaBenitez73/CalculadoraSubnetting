@@ -1,6 +1,6 @@
 export function myFunction() {
     var hosts = document.getElementByClassName("hosts-required");
-    var nSubnets = document.getElementById("n-subnets").getAttribute("@bind");
+    var nSubnets = document.getElementById("n-subnets");
 
     console.log(hosts);
     console.log(nSubnets);

@@ -4,7 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body>
+<body @onload="CalculateSubnets">
 	@*@onload="CalculateSubnets"*@
 	<div id="div1">
 		<div id="title">
@@ -40,7 +40,7 @@
 			}
 			<tr class="top-border">
 				<td class="center">Número de subredes:</td>
-				<td colspan="2"><input id="n-subnets" type="number" @bind="NumberOfSubnets" /></td>
+				<td colspan="2"><input id="n-subnets" type="number" @bind="NumberOfSubnets" onkeydown="handleKeyDown(event)"/></td>
 				<td><button type="submit" @onclick="VerifyNumberOfSubnets">Change</button></td>
 			</tr>
 			<tr>
@@ -51,6 +51,8 @@
 </body>
 
 @code {
+	private IJSInProcessObjectReference module;
+
 	class SubnetInfo
 	{
 		public string Name { get; set; }
