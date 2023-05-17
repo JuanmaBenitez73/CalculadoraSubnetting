@@ -27,7 +27,7 @@ export function verifyNumberOfSubnets() {
         }
     }
 
-    var button = document.getElementById("change");
+    //var button = document.getElementById("change");
 
     if (numSubnets > 0) {
         for (var i = 0; i < numSubnets; i++) {
@@ -58,9 +58,9 @@ export function verifyNumberOfSubnets() {
     }
     else {
         inputSubnets.value = 1;
-        button.addEventListener('click', () => {
-            var newValue = 1;
-            inputSubnets.value = newValue;
-        });
+        //button.addEventListener('click', () => {
+        //    var newValue = 1;
+        //    inputSubnets.value = newValue;
+        //});
     }
 }
