@@ -1,22 +1,3 @@
-export function myFunction() {
-    var hosts = document.getElementByClassName("hosts-required");
-
-    console.log(hosts);
-    console.log(nSubnets);
-}
-
-export function incorrectRange() {
-    alert("Alguno de los números está fuera del rango disponible");
-}
-
-export function incorrectFormat() {
-    alert("La dirección IP está en un formato incorrecto");
-}
-
-export function incorrectNumberOfHosts() {
-    alert("Alguna cantidad de Hosts es más grande de lo posible");
-}
-
 export function verifyNumberOfSubnets() {
     var inputSubnets = document.getElementById("n-subnets");
     var numSubnets = inputSubnets.value;
@@ -47,8 +28,10 @@ export function verifyNumberOfSubnets() {
 
         tr.classList.add("tony");
         td1.setAttribute("colspan", "2");
+        td1.setAttribute("id", "name");
         td1.classList.add("right-border");
         td2.setAttribute("colspan", "2");
+        td2.setAttribute("id", "hosts");
 
         var input1 = document.createElement("input");
         var input2 = document.createElement("input");
@@ -67,6 +50,31 @@ export function verifyNumberOfSubnets() {
     }
 }
 
+export function viewResult() {
+    var submit = document.getElementById("submit");
+
+}
+
+export function incorrectRange() {
+    alert("Alguno de los números está fuera del rango disponible");
+}
+
+export function incorrectFormat() {
+    alert("La dirección IP está en un formato incorrecto");
+}
+
+export function incorrectNumberOfHosts() {
+    alert("Alguna cantidad de Hosts es más grande de lo posible");
+}
+
 export function getSubnetsNumber() {
     return document.getElementById("n-subnets").value;
+}
+
+export function getSubnetsName() {
+    return document.getElementById("name").value;
+}
+
+export function getHostsRequired() {
+    return document.getElementById("hosts").value;
 }

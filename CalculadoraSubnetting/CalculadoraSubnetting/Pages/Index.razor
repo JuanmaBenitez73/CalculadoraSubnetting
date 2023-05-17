@@ -37,7 +37,7 @@
 					<td><button id="change" type="submit" @onclick="VerifyNumberOfSubnets">Change</button></td>
 				</tr>
 				<tr>
-					<td colspan="5" class="my-border"><button type="submit" @onclick="CalculateSubnets">Submit</button></td>@*@onclick="CalculateSubnets"*@
+					<td colspan="5" class="my-border"><button id="submit" type="submit" @onclick="CalculateSubnets">Submit</button></td>@*@onclick="CalculateSubnets"*@
 				</tr>
 			</tbody>
 		</table>
@@ -124,7 +124,8 @@
 			ipBytes.Add((byte)(item));
 		}
 
-		NumberOfSubnets = await GetSubnets();
+		NumberOfSubnets = await GetSubnetsNumber();
+
 
 		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
@@ -137,7 +138,9 @@
 
 		for (int i = 0; i < NumberOfSubnets; i++)
 		{
-			Subnets[i].HostsRequired = subnetInfo.HostsRequired;
+			Subnets[i].HostsRequired = await GetHostsRequired();
+
+			subnetInfo.Name = await GetSubnetsName();
 
 			subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
 
@@ -159,7 +162,9 @@
 	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
 	private async Task IncorrectFormat() => await module.InvokeVoidAsync("incorrectFormat");
 	private async Task IncorrectNumberOfHosts() => await module.InvokeVoidAsync("incorrectNumberOfHosts");
-	private async Task<int> GetSubnets() => await module.InvokeAsync<int>("getSubnetsNumber");
+	private async Task<int> GetSubnetsNumber() => await module.InvokeAsync<int>("getSubnetsNumber");
+	private async Task<string> GetSubnetsName() => await module.InvokeAsync<string>("getSubnetsName");
+	private async Task<int> GetHostsRequired() => await module.InvokeAsync<int>("getHostsRequired");
 
 	protected override async Task OnInitializedAsync()
 	{
