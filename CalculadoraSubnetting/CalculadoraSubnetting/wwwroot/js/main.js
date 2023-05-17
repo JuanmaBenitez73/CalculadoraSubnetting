@@ -27,10 +27,9 @@ export function verifyNumberOfSubnets() {
         }
     }
 
-    if (numSubnets <= 0) {
-        numSubnets = 1;
-    }
-    else {
+    var button = document.getElementById("change");
+
+    if (numSubnets > 0) {
         for (var i = 0; i < numSubnets; i++) {
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
@@ -56,5 +55,11 @@ export function verifyNumberOfSubnets() {
             td1.appendChild(input1);
             td2.appendChild(input2);
         }
+    }
+    else {
+        button.addEventListener('click', () => {
+            var newValue = 1;
+            inputSubnets.value = newValue;
+        });
     }
 }
