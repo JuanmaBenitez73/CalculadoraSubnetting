@@ -218,58 +218,44 @@
 
 	}
 
-	private string GetFirstHostAddress(string subnetAddress)
+	private string GetFirstHostAddress(string subnetAddress, string subnetMask)
 	{
 		List<byte> subnetAddressBytes = subnetAddress.Split('.').Select(byte.Parse).ToList();
+		List<byte> subnetMaskBytes = subnetMask.Split('.').Select(byte.Parse).ToList();
 
+		int maskBits = subnetMaskBytes.Sum(b => Convert.ToString(b, 2).Count(c => c == '1')); 
 
-		byte classByte = subnetAddressBytes[0];
+		
+		if (maskBits < 1 || maskBits > 32)
+		{
+			throw new ArgumentException("La máscara de subred especificada no es válida.");
+		}
 
+		int octetIndex = (maskBits - 1) / 8; 
 
-		if (classByte >= 1 && classByte <= 126)
-		{
-			subnetAddressBytes[1] += 1; 
-		}
-		else if (classByte >= 128 && classByte <= 191)
-		{
-			subnetAddressBytes[2] += 1;  
-		}
-		else if (classByte >= 192 && classByte <= 223)
-		{
-			subnetAddressBytes[3] += 1;  
-		}
-		else
-		{
-			throw new ArgumentException("La dirección de subred especificada no pertenece a las clases A, B o C.");
-		}
+		
+		subnetAddressBytes[octetIndex] += 1;
 
 		return string.Join(".", subnetAddressBytes);
-
 	}
 
-	private string GetLastHostAddress(string broadcastAddress)
+	private string GetLastHostAddress(string broadcastAddress, string subnetMask)
 	{
 		List<byte> broadcastAddressBytes = broadcastAddress.Split('.').Select(byte.Parse).ToList();
+		List<byte> subnetMaskBytes = subnetMask.Split('.').Select(byte.Parse).ToList();
 
-		byte classByte = broadcastAddressBytes[0];
+		int maskBits = subnetMaskBytes.Sum(b => Convert.ToString(b, 2).Count(c => c == '1'));
 
 
-		if (classByte >= 1 && classByte <= 126)
+		if (maskBits < 1 || maskBits > 32)
 		{
-			broadcastAddressBytes[1] += 1;
+			throw new ArgumentException("La máscara de subred especificada no es válida.");
 		}
-		else if (classByte >= 128 && classByte <= 191)
-		{
-			broadcastAddressBytes[2] += 1;
-		}
-		else if (classByte >= 192 && classByte <= 223)
-		{
-			broadcastAddressBytes[3] += 1;
-		}
-		else
-		{
-			throw new ArgumentException("La dirección de subred especificada no pertenece a las clases A, B o C.");
-		}
+
+		int octetIndex = (maskBits - 1) / 8;
+
+
+		broadcastAddressBytes[octetIndex] += 1;
 
 		return string.Join(".", broadcastAddressBytes);
 	}
