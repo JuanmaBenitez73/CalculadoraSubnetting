@@ -109,7 +109,7 @@
 				}
 				else
 				{
-					//await module.InvokeVoidAsync("incorrectRange");
+					IncorrectRange();
 				}
 			}
 		}
@@ -156,6 +156,7 @@
 	}
 
 	private async Task VerifyNumberOfSubnets() => await module.InvokeVoidAsync("verifyNumberOfSubnets");
+	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
 
 	protected override async Task OnInitializedAsync()
 	{
