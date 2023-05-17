@@ -145,10 +145,13 @@
 
 			subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
 
+			subnetInfo.RangeStart = GetFirstHostAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+
+			subnetInfo.RangeEnd = GetLastHostAddress(subnetInfo.BroadcastAddress, subnetInfo.SubnetMask);
+
 			subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
 
 			Subnets.Add(subnetInfo);
-
 		}
 	}
 
