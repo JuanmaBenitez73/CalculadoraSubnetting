@@ -37,7 +37,7 @@
 					<td><button id="change" type="submit" @onclick="VerifyNumberOfSubnets">Change</button></td>
 				</tr>
 				<tr>
-					<td colspan="5" class="my-border"><button type="submit">Submit</button></td>@*@onclick="CalculateSubnets"*@
+					<td colspan="5" class="my-border"><button type="submit" @onclick="CalculateSubnets">Submit</button></td>@*@onclick="CalculateSubnets"*@
 				</tr>
 			</tbody>
 		</table>
@@ -112,7 +112,7 @@
 		}
 		else
 		{
-			IpAddress = "";
+			IncorrectFormat();
 		}
 
 		List<byte> ipBytes = new List<byte>();
@@ -132,7 +132,7 @@
 		int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
 		if (subnetInfo.HostsRequired > maxNumberOfHosts)
 		{
-			//Console.WriteLine("El número de hosts especificado no es válido para la máscara de subred dada.");
+			IncorrectNumberOfHosts();
 		}
 
 		for (int i = 0; i < NumberOfSubnets; i++)
@@ -157,6 +157,8 @@
 
 	private async Task VerifyNumberOfSubnets() => await module.InvokeVoidAsync("verifyNumberOfSubnets");
 	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
+	private async Task IncorrectFormat() => await module.InvokeVoidAsync("incorrectFormat");
+	private async Task IncorrectNumberOfHosts() => await module.InvokeVoidAsync("incorrectNumberOfHosts");
 	private async Task<int> GetSubnets() => await module.InvokeAsync<int>("getSubnetsNumber");
 
 	protected override async Task OnInitializedAsync()

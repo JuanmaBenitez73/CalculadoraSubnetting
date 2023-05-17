@@ -9,6 +9,14 @@ export function incorrectRange() {
     alert("Alguno de los números está fuera del rango disponible");
 }
 
+export function incorrectFormat() {
+    alert("La dirección IP está en un formato incorrecto");
+}
+
+export function incorrectNumberOfHosts() {
+    alert("Alguna cantidad de Hosts es más grande de lo posible");
+}
+
 export function verifyNumberOfSubnets() {
     var inputSubnets = document.getElementById("n-subnets");
     var numSubnets = inputSubnets.value;
