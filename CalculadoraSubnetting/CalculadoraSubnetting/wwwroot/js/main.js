@@ -57,6 +57,4 @@ export function verifyNumberOfSubnets() {
             td2.appendChild(input2);
         }
     }
-
-    console.log(nSubnets);
 }
