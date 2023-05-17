@@ -250,7 +250,7 @@
 	{
 		List<byte> broadcastAddressBytes = broadcastAddress.Split('.').Select(byte.Parse).ToList();
 
-		byte classByte = subnetAddressBytes[0];
+		byte classByte = broadcastAddressBytes[0];
 
 
 		if (classByte >= 1 && classByte <= 126)
