@@ -205,6 +205,8 @@
 				}
 			}
 
+			NumberOfSubnets = await module.InvokeAsync<int>("getSubnetsNumber");
+
 			if (subnetInfo.HostsRequired > maxNumberOfHosts)
 			{
 				IncorrectNumberOfHosts();
@@ -214,6 +216,8 @@
 				for (int i = 0; i < NumberOfSubnets; i++)
 				{
 					Subnets[i].HostsRequired = subnetInfo.HostsRequired;
+
+					subnetInfo.Name = await GetSubnetsName();
 
 					subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
 
