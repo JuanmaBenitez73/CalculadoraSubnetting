@@ -79,10 +79,10 @@ export function verifyNumberOfSubnets() {
 //                        td.innerHTML = "Hosts disponibles";
 //                        break;
 //                    case 3:
-//                        td.innerHTML = "Direcci�n IP";
+//                        td.innerHTML = "Dirección IP";
 //                        break;
 //                    case 4:
-//                        td.innerHTML = "M�scara";
+//                        td.innerHTML = "Máscara";
 //                        break;
 //                    case 5:
 //                        td.innerHTML = "Rango de IPs asignables";
@@ -110,10 +110,10 @@ export function verifyNumberOfSubnets() {
 //                        td.innerHTML = "Hosts disponibles";
 //                        break;
 //                    case 3:
-//                        td.innerHTML = "Direcci�n IP";
+//                        td.innerHTML = "Dirección IP";
 //                        break;
 //                    case 4:
-//                        td.innerHTML = "M�scara";
+//                        td.innerHTML = "Máscara";
 //                        break;
 //                    case 5:
 //                        td.innerHTML = "Rango de IPs asignables";
@@ -132,15 +132,15 @@ export function verifyNumberOfSubnets() {
 //}
 
 export function incorrectRange() {
-    alert("Alguno de los numeros esta fuera del rango disponible");
+    alert("Alguno de los números está fuera del rango disponible");
 }
 
 export function incorrectFormat() {
-    alert("La direccion IP esta en un formato incorrecto");
+    alert("La dirección IP está en un formato incorrecto");
 }
 
 export function incorrectNumberOfHosts() {
-    alert("Alguna cantidad de Hosts es mas grande de lo posible");
+    alert("Alguna cantidad de hosts es más grande de lo posible");
 }
 
 export function getSubnetsNumber() {
