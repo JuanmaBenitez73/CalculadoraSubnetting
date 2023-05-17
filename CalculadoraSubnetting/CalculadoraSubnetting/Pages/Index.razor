@@ -3,20 +3,20 @@
 @using Microsoft.JSInterop;
 @inject IJSRuntime JSRuntime
 
-<PageTitle>Calculadora de Subnetting para estudiantes</PageTitle>
+<PageTitle>Calculadora Subnetting</PageTitle>
 <body>
 	<div id="div1">
 		<div id="title">
-			<h1>Calculadora de Subnetting (FLSM) para estudiantes</h1>
+			<h1>Calculadora de Subnetting (FLSM)</h1>
 		</div>
 		<br />
 		<div id="description">
-			<h5>Calculadora de redes con el uso de subnetting mediante el método FLSM (Máscara de Red Fija)</h5>
+			<h5>Esta es una calculadora de redes con el uso de subnetting mediante el método FLSM (Máscara de Red Fija)</h5>
 		</div>
 		<br />
 		<br />
 		<div id="request">
-			Introduzca una dirección IP con una máscara de red, el tamaño de las redes y la cantidad de subredes que desea
+			Introduce una Dirección IP con una máscara de red, el tamaño de las redes y la cantidad de subredes que deseas
 		</div>
 	</div>
 	<div id="div-table1">
@@ -165,11 +165,27 @@
 			subnetMask = int.Parse(ipAddress.Split('/')[1]);
 
 			byte ipmaskBytes = (byte)(subnetMask);
-			List<byte> ipsmaskBytes = new List<byte> { (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };
+			List<byte> ipsmaskBytes = new List<byte>(); /*{ (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };*/
 
-			int elevate = (32 - subnetMask);
+			if (subnetMask >= 1 && subnetMask <= 8)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					for (int j = 0; j < 8; j++)
+					{
+						if (subnetMask == 1)
+						{
+							ipsmaskBytes[i] = (byte)(Math.Pow(2, (8 - subnetMask)));
+						}
+						else
+						{
+							ipsmaskBytes[i] = (byte)((int)(Math.Pow(2, (8 - subnetMask + j + 1))) + (int)(Math.Pow(2, (8 - subnetMask))));
+						}
+					}
+				}
+			}
 
-			double subnetSize = (double)Math.Pow(2, elevate) / NumberOfSubnets;
+			double subnetSize = (double)Math.Pow(2, (32 - subnetMask)) / NumberOfSubnets;
 			int maxNumberOfHosts = (int)Math.Pow(2, (32 - ipmaskBytes)) - 2;
 			
 
