@@ -57,6 +57,7 @@ export function verifyNumberOfSubnets() {
         }
     }
     else {
+        inputSubnets.value = 1;
         button.addEventListener('click', () => {
             var newValue = 1;
             inputSubnets.value = newValue;
