@@ -10,38 +10,52 @@ export function incorrectRange() {
 }
 
 export function verifyNumberOfSubnets() {
-    var inputSubnets = document.getElementById("n-subnets").value;
-    var numSubnets = 0;
+    var inputSubnets = document.getElementById("n-subnets");
+    var numSubnets = inputSubnets.value;
     var two = document.getElementById("two");
+    var subnets = document.getElementById("subnets");
 
-    for (int i = 0; i < nSubnets; i++)
-    {
-        var tr = document.createElement("tr");
-        var td1 = document.createElement("td");
-        var td2 = document.createElement("td");
+    var value = parseInt(numSubnets) + 1;
+    subnets.setAttribute("rowspan", value);
 
-        td1.setAttribute("colspan", "2");
-        td1.classList.add("right-border");
+    var tonysito = document.getElementsByClassName("tony");
 
-        td2.setAttribute("colspan", "2");
+    if (tonysito.length != 0) {
+        for (var i = 0; i < tonysito.length; i++) {
+            tonysito[i].remove();
+            i--;
+        }
+    }
 
-        var input1 = document.createElement("input");
-        var input2 = document.createElement("input");
+    if (numSubnets <= 0) {
+        numSubnets = 1;
+    }
+    else {
+        for (var i = 0; i < numSubnets; i++) {
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var td2 = document.createElement("td");
 
-        input1.setAttribute("type", "text");
-        input1.setAttribute("placeholder", "Subred");
+            tr.classList.add("tony");
+            td1.setAttribute("colspan", "2");
+            td1.classList.add("right-border");
+            td2.setAttribute("colspan", "2");
 
-        input2.setAttribute("type", "number");
-        input2.classList.add("hosts-required");
+            var input1 = document.createElement("input");
+            var input2 = document.createElement("input");
 
-            //<td colspan="2" class="right-border"><input type="text" placeholder="Subred" /></td>
-            //<td colspan="2"><input type="number" class="hosts-required" /></td>
+            input1.setAttribute("type", "text");
+            input1.setAttribute("placeholder", "Subred");
 
-        two.append(tr);
-        tr.appendChild(td1);
-        tr.appendChild(td2);
-        td1.appendChild(input1);
-        td2.appendChild(input2);
+            input2.setAttribute("type", "number");
+            input2.classList.add("hosts-required");
+
+            two.parentNode.insertBefore(tr, two.nextSibling);
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            td1.appendChild(input1);
+            td2.appendChild(input2);
+        }
     }
 
     console.log(nSubnets);
