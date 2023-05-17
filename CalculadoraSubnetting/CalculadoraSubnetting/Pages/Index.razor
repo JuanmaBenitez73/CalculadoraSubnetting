@@ -220,7 +220,28 @@
 	private string GetFirstHostAddress(string subnetAddress)
 	{
 		List<byte> subnetAddressBytes = subnetAddress.Split('.').Select(byte.Parse).ToList();
-		subnetAddressBytes[3] += 1;
+
+
+		byte classByte = subnetAddressBytes[0];
+
+
+		if (classByte >= 1 && classByte <= 126)
+		{
+			subnetAddressBytes[1] += 1; 
+		}
+		else if (classByte >= 128 && classByte <= 191)
+		{
+			subnetAddressBytes[2] += 1;  
+		}
+		else if (classByte >= 192 && classByte <= 223)
+		{
+			subnetAddressBytes[3] += 1;  
+		}
+		else
+		{
+			throw new ArgumentException("La dirección de subred especificada no pertenece a las clases A, B o C.");
+		}
+
 		return string.Join(".", subnetAddressBytes);
 
 	}
@@ -228,7 +249,27 @@
 	private string GetLastHostAddress(string broadcastAddress)
 	{
 		List<byte> broadcastAddressBytes = broadcastAddress.Split('.').Select(byte.Parse).ToList();
-		broadcastAddressBytes[3] -= 1;
+
+		byte classByte = subnetAddressBytes[0];
+
+
+		if (classByte >= 1 && classByte <= 126)
+		{
+			broadcastAddressBytes[1] += 1;
+		}
+		else if (classByte >= 128 && classByte <= 191)
+		{
+			broadcastAddressBytes[2] += 1;
+		}
+		else if (classByte >= 192 && classByte <= 223)
+		{
+			broadcastAddressBytes[3] += 1;
+		}
+		else
+		{
+			throw new ArgumentException("La dirección de subred especificada no pertenece a las clases A, B o C.");
+		}
+
 		return string.Join(".", broadcastAddressBytes);
 	}
 
