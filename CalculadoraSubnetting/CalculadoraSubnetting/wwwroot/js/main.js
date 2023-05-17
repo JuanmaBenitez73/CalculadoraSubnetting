@@ -50,10 +50,86 @@ export function verifyNumberOfSubnets() {
     }
 }
 
-export function viewResult() {
-    var submit = document.getElementById("submit");
+//export function viewResult() {
+//    var submit = document.getElementById("submit");
+//    var numSubnets = document.getElementById("n-subnets").value;
 
-}
+//    var div = document.getElementById("div-table2");
+//    var table2 = document.createElement("table");
+//    var tbody = document.createElement("tbody");
+
+//    table2.setAttribute("table2");
+
+//    var availableHosts = DotNet.invokeMethodSync();
+
+//    for (var i = 0; i < numSubnets + 1; i++) {
+//        var tr = document.createElement("tr");
+//        if (i == 0) {
+//            for (var j = 0; j < 7; j++) {
+//                var td = document.createElement("td");
+
+//                switch (j) {
+//                    case 0:
+//                        td.innerHTML = "Nombre Subred";
+//                        break;
+//                    case 1:
+//                        td.innerHTML = "Hosts necesarios";
+//                        break;
+//                    case 2:
+//                        td.innerHTML = "Hosts disponibles";
+//                        break;
+//                    case 3:
+//                        td.innerHTML = "Dirección IP";
+//                        break;
+//                    case 4:
+//                        td.innerHTML = "Máscara";
+//                        break;
+//                    case 5:
+//                        td.innerHTML = "Rango de IPs asignables";
+//                        break;
+//                    case 6:
+//                        td.innerHTML = "Broadcast";
+//                        break;
+//                }
+//            }
+//        }
+//        else {
+//            var td = document.createElement("td");
+
+//            for (var j = 0; j < 7; j++) {
+//                var td = document.createElement("td");
+
+//                switch (j) {
+//                    case 0:
+//                        td.innerHTML = document.getElementById("name").value;
+//                        break;
+//                    case 1:
+//                        td.innerHTML = document.getElementById("hosts").value;
+//                        break;
+//                    case 2:
+//                        td.innerHTML = "Hosts disponibles";
+//                        break;
+//                    case 3:
+//                        td.innerHTML = "Dirección IP";
+//                        break;
+//                    case 4:
+//                        td.innerHTML = "Máscara";
+//                        break;
+//                    case 5:
+//                        td.innerHTML = "Rango de IPs asignables";
+//                        break;
+//                    case 6:
+//                        td.innerHTML = "Broadcast";
+//                        break;
+//                }
+//            }
+//        }
+//    }
+
+//    /*submit.addEventListener('click', () => {
+
+//    });*/
+//}
 
 export function incorrectRange() {
     alert("Alguno de los números está fuera del rango disponible");

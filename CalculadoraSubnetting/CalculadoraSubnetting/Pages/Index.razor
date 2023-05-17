@@ -20,7 +20,7 @@
 		</div>
 	</div>
 	<div id="div-table1">
-		<table class="my-border">
+		<table id="table1" class="my-border">
 			<tbody>
 				<tr>
 					<td class="center my-border">Dirección IP y Máscara</td>
@@ -42,10 +42,75 @@
 			</tbody>
 		</table>
 	</div>
+	<div id="div-table2">
+		<table id="table2" class="my-border center">
+			<tbody>
+				@for (int i = 0; i < NumberOfSubnets + 1; i++)
+				{
+					<tr>
+						@if (i == 0)
+						{
+							@for (int j = 0; j < cellDataList.Count; j++)
+							{
+								<th class="my-border">
+									@cellDataList[j].Text
+								</th>
+							}
+						}
+						else
+						{
+							@for (int j = 0; j < cellDataList.Count; j++)
+							{
+								@switch (j)
+								{
+									case 0:
+										<td>@subnetInfo.Name</td>
+										break;
+									case 1:
+										<td>@subnetInfo.HostsRequired</td>
+										break;
+									case 2:
+										<td>@subnetInfo.AvailableHosts</td>
+										break;
+									case 3:
+										<td>@subnetInfo.SubnetAddress</td>
+										break;
+									case 4:
+										<td>@subnetInfo.SubnetMask</td>
+										break;
+									case 5:
+										<td>@subnetInfo.RangeStart - @subnetInfo.RangeEnd</td>
+										break;
+									case 6:
+										<td>@subnetInfo.BroadcastAddress</td>
+										break;
+								}
+							}
+						}
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
 </body>
 
 @code {
 	private IJSInProcessObjectReference module;
+
+	public class CellData
+	{
+		public string Text { get; set; }
+	}
+	private List<CellData> cellDataList = new List<CellData>()
+	{
+		new CellData(){ Text = "Nombre Subred" },
+		new CellData(){ Text = "Hosts necesarios" },
+		new CellData(){ Text = "Hosts disponibles" },
+		new CellData(){ Text = "Dirección IP" },
+		new CellData(){ Text = "Máscara" },
+		new CellData(){ Text = "Rango de IPs asignables" },
+		new CellData(){ Text = "Broadcast" },
+	};
 
 	class SubnetInfo
 	{
