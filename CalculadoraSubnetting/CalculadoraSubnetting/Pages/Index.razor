@@ -67,7 +67,9 @@
 										<td>@subnetInfo.Name</td>
 										break;
 									case 1:
-										<td>@subnetInfo.HostsRequired</td>
+										<td>
+											@subnetInfo.HostsRequired.Max()
+										</td>
 										break;
 									case 2:
 										<td>@subnetInfo.AvailableHosts</td>
@@ -161,6 +163,7 @@
 		{
 			NumberOfSubnets = await GetSubnetsNumber();
 			subnetInfo.HostsRequired = await GetHostsRequired();
+			subnetInfo.Name = await GetSubnetsName();
 
 			subnetMask = int.Parse(ipAddress.Split('/')[1]);
 
