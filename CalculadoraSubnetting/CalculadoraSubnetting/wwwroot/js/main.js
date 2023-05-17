@@ -144,7 +144,9 @@ export function incorrectNumberOfHosts() {
 }
 
 export function getSubnetsNumber() {
-    return document.getElementById("n-subnets").value;
+    var inputSubnets = document.getElementById("n-subnets");
+    var numSubnets = parseInt(inputSubnets.value);
+    return numSubnets;
 }
 
 export function getSubnetsName() {
@@ -152,5 +154,12 @@ export function getSubnetsName() {
 }
 
 export function getHostsRequired() {
-    return document.getElementById("hosts").value;
+    var inputHosts = document.getElementsByClassName("hosts-required");
+    var hostsRequired = [];
+
+    for (var i = 0; i < inputHosts.length; i++) {
+        hostsRequired[i] = parseInt(inputHosts[i].value);
+    }
+
+    return hostsRequired;
 }
