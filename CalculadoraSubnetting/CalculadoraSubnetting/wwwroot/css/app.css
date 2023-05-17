@@ -62,21 +62,9 @@ button{
     font-weight: 600;
 }
 
-/*#table2{
-    display:none;
-}*/
-
 tr, td, th{
     padding:10px;
 }
-
-/*.purple1 {
-    background-color: #C000FF;
-}
-
-.purple2{
-    background-color: #C082FF;
-}*/
 
 a, .btn-link {
     color: #0071c1;
