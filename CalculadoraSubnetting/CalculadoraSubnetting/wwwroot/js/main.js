@@ -15,6 +15,11 @@ export function verifyNumberOfSubnets() {
     var two = document.getElementById("two");
     var subnets = document.getElementById("subnets");
 
+    if (!(numSubnets > 0)) {
+        inputSubnets.value = 1;
+        numSubnets = 1;
+    }
+
     var value = parseInt(numSubnets) + 1;
     subnets.setAttribute("rowspan", value);
 
@@ -27,40 +32,29 @@ export function verifyNumberOfSubnets() {
         }
     }
 
-    //var button = document.getElementById("change");
+    for (var i = 0; i < numSubnets; i++) {
+        var tr = document.createElement("tr");
+        var td1 = document.createElement("td");
+        var td2 = document.createElement("td");
 
-    if (numSubnets > 0) {
-        for (var i = 0; i < numSubnets; i++) {
-            var tr = document.createElement("tr");
-            var td1 = document.createElement("td");
-            var td2 = document.createElement("td");
+        tr.classList.add("tony");
+        td1.setAttribute("colspan", "2");
+        td1.classList.add("right-border");
+        td2.setAttribute("colspan", "2");
 
-            tr.classList.add("tony");
-            td1.setAttribute("colspan", "2");
-            td1.classList.add("right-border");
-            td2.setAttribute("colspan", "2");
+        var input1 = document.createElement("input");
+        var input2 = document.createElement("input");
 
-            var input1 = document.createElement("input");
-            var input2 = document.createElement("input");
+        input1.setAttribute("type", "text");
+        input1.setAttribute("placeholder", "Subred");
 
-            input1.setAttribute("type", "text");
-            input1.setAttribute("placeholder", "Subred");
+        input2.setAttribute("type", "number");
+        input2.classList.add("hosts-required");
 
-            input2.setAttribute("type", "number");
-            input2.classList.add("hosts-required");
-
-            two.parentNode.insertBefore(tr, two.nextSibling);
-            tr.appendChild(td1);
-            tr.appendChild(td2);
-            td1.appendChild(input1);
-            td2.appendChild(input2);
-        }
-    }
-    else {
-        inputSubnets.value = 1;
-        //button.addEventListener('click', () => {
-        //    var newValue = 1;
-        //    inputSubnets.value = newValue;
-        //});
+        two.parentNode.insertBefore(tr, two.nextSibling);
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        td1.appendChild(input1);
+        td2.appendChild(input2);
     }
 }
