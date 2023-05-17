@@ -4,8 +4,7 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Calculadora Subnetting</PageTitle>
-<body @onload="CalculateSubnets">
-	@*@onload="CalculateSubnets"*@
+<body>
 	<div id="div1">
 		<div id="title">
 			<h1>Calculadora de Subnetting (FLSM)</h1>
@@ -61,8 +60,6 @@
 
 		public SubnetInfo() { }
 	}
-
-	public int RowSpan => NumberOfSubnets + 1;
 
 	private bool showResults = false;
 	public string IpAddress { get; set; }
@@ -127,15 +124,15 @@
 			ipBytes.Add((byte)(item));
 		}
 
+		NumberOfSubnets = await GetSubnets();
+
 		//El tamaño de cada subred
 		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
 
 		int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
 		if (subnetInfo.HostsRequired > maxNumberOfHosts)
 		{
-			
-			Console.WriteLine("El número de hosts especificado no es válido para la máscara de subred dada.");
-			return;
+			//Console.WriteLine("El número de hosts especificado no es válido para la máscara de subred dada.");
 		}
 
 		for (int i = 0; i < NumberOfSubnets; i++)
@@ -157,6 +154,7 @@
 
 	private async Task VerifyNumberOfSubnets() => await module.InvokeVoidAsync("verifyNumberOfSubnets");
 	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
+	private async Task<int> GetSubnets() => await module.InvokeAsync<int>("getSubnetsNumber");
 
 	protected override async Task OnInitializedAsync()
 	{

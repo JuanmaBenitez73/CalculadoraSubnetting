@@ -58,3 +58,7 @@ export function verifyNumberOfSubnets() {
         td2.appendChild(input2);
     }
 }
+
+export function getSubnetsNumber() {
+    return document.getElementById("n-subnets").value;
+}
