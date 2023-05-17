@@ -155,6 +155,10 @@
 		List<string> octetos = new List<string>();
 		List<int> octetosIp = new List<int>();
 
+		List<byte> ipBytes = new List<byte>();
+		byte ipmaskBytes = (byte)(subnetMask);
+		List<byte> ipsmaskBytes = new List<byte> { (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };
+
 		if (ipMatch.Success && maskMatch.Success)
 		{
 			subnetMask = int.Parse(ipAddress.Split('/')[1]);
@@ -163,63 +167,72 @@
 			{
 				octetos.Add(item);
 			}
-			foreach (var item in octetos)
+			for (int i = 0; i < octetos.Count; i++)
 			{
-				if (int.Parse(item) >= 0 && int.Parse(item) <= 255)
+				octetosIp.Add(int.Parse(octetos[i]));
+			}
+			/*foreach (var item in octetos)
+			{
+				octetosIp.Add(int.Parse(item));
+			}*/
+			for (int i = 0; i < octetosIp.Count; i++)
+			{
+				if (octetosIp[i] >= 0 && octetosIp[i] <= 255)
 				{
-					octetosIp.Add(int.Parse(item));
+					ipBytes.Add((byte)(octetosIp[i]));
 				}
 				else
 				{
 					IncorrectRange();
 				}
 			}
+			/*foreach (int item in octetosIp)
+			{
+				if (item >= 0 && item <= 255)
+				{
+					ipBytes.Add((byte)(item));
+				}
+				else
+				{
+					IncorrectRange();
+				}
+			}*/
+
+			NumberOfSubnets = await GetSubnetsNumber();
+
+			//El tamaño de cada subred
+			int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
+
+			int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
+			if (subnetInfo.HostsRequired > maxNumberOfHosts)
+			{
+				IncorrectNumberOfHosts();
+			}
+
+			/*for (int i = 0; i < NumberOfSubnets; i++)
+			{
+				Subnets[i].HostsRequired = await GetHostsRequired();
+
+				subnetInfo.Name = await GetSubnetsName();
+
+				subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
+
+				subnetInfo.SubnetMask = GetSubnetMask(ipmaskBytes);
+
+				subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+
+				subnetInfo.RangeStart = GetFirstHostAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+
+				subnetInfo.RangeEnd = GetLastHostAddress(subnetInfo.BroadcastAddress, subnetInfo.SubnetMask);
+
+				subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
+
+				Subnets.Add(subnetInfo);
+			}*/
 		}
 		else
 		{
 			IncorrectFormat();
-		}
-
-		List<byte> ipBytes = new List<byte>();
-		byte ipmaskBytes = (byte)(subnetMask);
-		List<byte> ipsmaskBytes = new List<byte> { (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };
-
-		foreach (int item in octetosIp)
-		{
-			ipBytes.Add((byte)(item));
-		}
-
-		NumberOfSubnets = await GetSubnetsNumber();
-
-
-		//El tamaño de cada subred
-		int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
-
-		int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
-		if (subnetInfo.HostsRequired > maxNumberOfHosts)
-		{
-			IncorrectNumberOfHosts();
-		}
-
-		for (int i = 0; i < NumberOfSubnets; i++)
-		{
-			Subnets[i].HostsRequired = await GetHostsRequired();
-
-			subnetInfo.Name = await GetSubnetsName();
-
-			subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
-
-			subnetInfo.SubnetMask = GetSubnetMask(ipmaskBytes);
-
-			subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
-
-			subnetInfo.RangeStart = GetFirstHostAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
-
-			subnetInfo.RangeEnd = GetLastHostAddress(subnetInfo.BroadcastAddress, subnetInfo.SubnetMask);
-
-			subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
-
-			Subnets.Add(subnetInfo);
 		}
 	}
 
@@ -238,7 +251,7 @@
 		module = await JSRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "./js/main.js");
 	}
 
-	private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, int subnetSize, int subnetIndex)
+	/*private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, int subnetSize, int subnetIndex)
 	{
 		List<byte> subnetAddressBytes = new List<byte>();
 		for (int i = 0; i < 4; i++)
@@ -347,5 +360,5 @@
 
 		return availableHosts;
 
-	}
+	}*/
 }
