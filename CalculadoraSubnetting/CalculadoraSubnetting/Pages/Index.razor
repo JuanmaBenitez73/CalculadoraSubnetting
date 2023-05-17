@@ -126,6 +126,25 @@
 		public SubnetInfo() { }
 	}
 
+	//Metodos JS
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+
+		module = await JSRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "./js/main.js");
+	}
+
+	private async Task VerifyNumberOfSubnets() => await module.InvokeVoidAsync("verifyNumberOfSubnets");
+	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
+	private async Task IncorrectFormat() => await module.InvokeVoidAsync("incorrectFormat");
+	private async Task IncorrectNumberOfHosts() => await module.InvokeVoidAsync("incorrectNumberOfHosts");
+	private async Task<int> GetSubnetsNumber() => NumberOfSubnets = await module.InvokeAsync<int>("getSubnetsNumber");
+	private async Task<string> GetSubnetsName() => subnetInfo.Name = await module.InvokeAsync<string>("getSubnetsName");
+	private async Task<int> GetHostsRequired() => subnetInfo.HostsRequired = await module.InvokeAsync<int>("getHostsRequired");
+
+	//Metodos JS
+
 	private bool showResults = false;
 	public string IpAddress { get; set; }
 	public int NumberOfSubnets { get; set; }
@@ -159,6 +178,9 @@
 		byte ipmaskBytes = (byte)(subnetMask);
 		List<byte> ipsmaskBytes = new List<byte> { (byte)(subnetMask >> 24), (byte)(subnetMask >> 16), (byte)(subnetMask >> 8), (byte)subnetMask };
 
+		double subnetSize = (double)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
+		int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
+
 		if (ipMatch.Success && maskMatch.Success)
 		{
 			subnetMask = int.Parse(ipAddress.Split('/')[1]);
@@ -171,10 +193,6 @@
 			{
 				octetosIp.Add(int.Parse(octetos[i]));
 			}
-			/*foreach (var item in octetos)
-			{
-				octetosIp.Add(int.Parse(item));
-			}*/
 			for (int i = 0; i < octetosIp.Count; i++)
 			{
 				if (octetosIp[i] >= 0 && octetosIp[i] <= 255)
@@ -186,49 +204,32 @@
 					IncorrectRange();
 				}
 			}
-			/*foreach (int item in octetosIp)
-			{
-				if (item >= 0 && item <= 255)
-				{
-					ipBytes.Add((byte)(item));
-				}
-				else
-				{
-					IncorrectRange();
-				}
-			}*/
 
-			NumberOfSubnets = await GetSubnetsNumber();
-
-			//El tamaño de cada subred
-			int subnetSize = (int)Math.Pow(2, 32 - subnetMask) / NumberOfSubnets;
-
-			int maxNumberOfHosts = (int)Math.Pow(2, 32 - ipmaskBytes) - 2;
 			if (subnetInfo.HostsRequired > maxNumberOfHosts)
 			{
 				IncorrectNumberOfHosts();
 			}
-
-			/*for (int i = 0; i < NumberOfSubnets; i++)
+			else
 			{
-				Subnets[i].HostsRequired = await GetHostsRequired();
+				for (int i = 0; i < NumberOfSubnets; i++)
+				{
+					Subnets[i].HostsRequired = subnetInfo.HostsRequired;
 
-				subnetInfo.Name = await GetSubnetsName();
+					subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
 
-				subnetInfo.SubnetAddress = GetSubnetAddress(ipBytes, ipsmaskBytes, subnetSize, i);
+					subnetInfo.SubnetMask = GetSubnetMask(ipmaskBytes);
 
-				subnetInfo.SubnetMask = GetSubnetMask(ipmaskBytes);
+					subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
 
-				subnetInfo.BroadcastAddress = GetBroadcastAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+					subnetInfo.RangeStart = GetFirstHostAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
 
-				subnetInfo.RangeStart = GetFirstHostAddress(subnetInfo.SubnetAddress, subnetInfo.SubnetMask);
+					subnetInfo.RangeEnd = GetLastHostAddress(subnetInfo.BroadcastAddress, subnetInfo.SubnetMask);
 
-				subnetInfo.RangeEnd = GetLastHostAddress(subnetInfo.BroadcastAddress, subnetInfo.SubnetMask);
+					subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
 
-				subnetInfo.AvailableHosts = GetAvailableHosts(subnetInfo.RangeStart, subnetInfo.RangeEnd);
-
-				Subnets.Add(subnetInfo);
-			}*/
+					Subnets.Add(subnetInfo);
+				}
+			}
 		}
 		else
 		{
@@ -236,22 +237,7 @@
 		}
 	}
 
-	private async Task VerifyNumberOfSubnets() => await module.InvokeVoidAsync("verifyNumberOfSubnets");
-	private async Task IncorrectRange() => await module.InvokeVoidAsync("incorrectRange");
-	private async Task IncorrectFormat() => await module.InvokeVoidAsync("incorrectFormat");
-	private async Task IncorrectNumberOfHosts() => await module.InvokeVoidAsync("incorrectNumberOfHosts");
-	private async Task<int> GetSubnetsNumber() => await module.InvokeAsync<int>("getSubnetsNumber");
-	private async Task<string> GetSubnetsName() => await module.InvokeAsync<string>("getSubnetsName");
-	private async Task<int> GetHostsRequired() => await module.InvokeAsync<int>("getHostsRequired");
-
-	protected override async Task OnInitializedAsync()
-	{
-		await base.OnInitializedAsync();
-
-		module = await JSRuntime.InvokeAsync<IJSInProcessObjectReference>("import", "./js/main.js");
-	}
-
-	/*private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, int subnetSize, int subnetIndex)
+	private string GetSubnetAddress(List<byte> ipBytes, List<byte> maskBytes, double subnetSize, int subnetIndex)
 	{
 		List<byte> subnetAddressBytes = new List<byte>();
 		for (int i = 0; i < 4; i++)
@@ -360,5 +346,5 @@
 
 		return availableHosts;
 
-	}*/
+	}
 }
