@@ -150,7 +150,9 @@ export function getSubnetsNumber() {
 }
 
 export function getSubnetsName() {
-    return document.getElementById("name").value;
+    var inputName = document.getElementById("name");
+    var nameSubnet = inputName.value;
+    return nameSubnet;
 }
 
 export function getHostsRequired() {
