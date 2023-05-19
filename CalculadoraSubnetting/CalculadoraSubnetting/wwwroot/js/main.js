@@ -72,7 +72,6 @@ export function getSubnetsName() {
     var inputName = document.getElementById("name");
     var nameSubnet = inputName.value;
     return nameSubnet;
-}
 
 export function getHostsRequired() {
     var inputHosts = document.getElementsByClassName("hosts-required");
